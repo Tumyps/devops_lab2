@@ -1,0 +1,1 @@
+print('road to registry')

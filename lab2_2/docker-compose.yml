@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  service1:
+    build:
+      context: ./service1
+    ports:
+      - "5001:5001"
+    depends_on:
+      - service2
+      - db
+    environment:
+      DATABASE_URL: "postgresql://example_user:example_password@db:5432/example_db"
+
+  service2:
+    build:
+      context: ./service2
+    ports:
+      - "5002:5002"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://example_user:example_password@db:5432/example_db"
+
+  db:
+    image: "postgres:latest"
+    environment:
+      POSTGRES_PASSWORD: example_password
+      POSTGRES_USER: example_user
+      POSTGRES_DB: example_db
+    ports:
+      - "5432:5432"
